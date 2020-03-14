@@ -10,7 +10,7 @@ Daftar
 </style>
 @endsection
 @section('content')
-<section class="htc__category__area ptb--100" 
+<section class="htc__category__area ptb--100" >
     <div class="container">
         <div class="row d-flex justify-content-center" >
             <div class="col-md-6 col-md-offset-3">
