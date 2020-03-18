@@ -38,6 +38,14 @@ Daftar
                                     <input type="text" class="form-control" required name="username">
                                 </div>
                                 <div class="form-group col-md-9">
+                                    <label for="">No Telepon</label>
+                                    <input type="text" class="form-control" required name="no_telpon">
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <label for="">Alamat</label>
+                                    <input type="text" class="form-control" required name="alamat">
+                                </div>
+                                <div class="form-group col-md-9">
                                     <label for="">Password</label>
                                     <input type="password"id="password"  class="form-control" required name="password">
                                 </div>

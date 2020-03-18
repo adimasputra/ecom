@@ -45,6 +45,14 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'pelanggan' => [
+            'driver' => 'session',
+            'provider' => 'pelanggan',
+        ],
     ],
 
     /*
@@ -69,6 +77,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'pelanggan' => [
+            'driver' => 'eloquent',
+            'model' => App\Pelanggan::class,
+        ], 
 
         // 'users' => [
         //     'driver' => 'database',

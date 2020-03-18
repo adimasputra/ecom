@@ -28,6 +28,12 @@
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <!-- User style -->
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+    <style>
+        .a {
+            color:#c43b68 !important;
+        }
+        </style>
     @yield('link')
 
     <!-- Modernizr JS -->
@@ -154,6 +160,13 @@
                                             </ul>
                                         </li>
                                         <li><a href="contact.html">contact</a></li>
+                                       
+                                        @if(Auth::guard('pelanggan'))
+                                        <li><a href="{{route('login')}}"><i class="icon-user icons a"></i></a></li>
+                                        <li><a href="{{route('logout')}}" class="a">Log Out</a></li>
+                                        @else
+                                        <li><a href="{{route('login')}}" class="a">Log In</a></li>
+                                        @endif
                                     </ul>
                                 </nav>
 
@@ -175,6 +188,7 @@
                                                 </ul>
                                             </li>
                                             <li><a href="contact.html">contact</a></li>
+                                            <li><a href="{{route('login')}}"><i class="icon-user icons"></i></a></li>
                                         </ul>
                                     </nav>
                                 </div>  
@@ -184,19 +198,13 @@
                                     <div class="header__search search search__open">
                                         <a href="#"><i class="icon-magnifier icons"></i></a>
                                     </div>
-                                    <div class="header__account">
-                                        <a href="{{route('login')}}"><i class="icon-user icons"></i></a>
-                                    </div>
+                                   
                                     {{-- <div class="htc__shopping__cart">
                                         <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
                                         <a href="#"><span class="htc__qua">2</span></a>
                                     </div> --}}
 
-                                    @if(Auth::user())
-                                    <div class="header__search">
-                                        <a href="#"><i class="icon-off icons"></i></a>
-                                    </div>
-                                    @endif
+                                   
                                 </div>
                             </div>
                         </div>
