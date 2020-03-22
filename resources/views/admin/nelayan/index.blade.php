@@ -204,7 +204,11 @@ Nelayan
 
         $(document).on('click', '.btn-edit', function(){
             
-            var id = this.attributes['data-id'].value
+            var id = this.attributes['data-id'].value;
+
+            $('.form-password').remove();
+            $('#Foto').removeAttr('required');
+
 
             var urlsnya = '{{ route("nelayan.edit", ['id'=>":id"]) }}';
             urlsnya = urlsnya.replace(':id', id);
@@ -225,6 +229,8 @@ Nelayan
                 $('#Username').val(response[0]['username'])
                 $('#Email').val(response[0]['email'])
                 $('#NamaTambak').val(response[0]['nama_tambak'])
+                $('#No_Telp').val(response[0]['no_telp'])
+                $('#Alamat').val(response[0]['alamat'])
                 $('#imagePreview').append(`<img src="{{asset('img/')}}/`+response[0]['foto']+`" width="250px" heighth="250px"/>`)
             })
         })

@@ -18,8 +18,9 @@ class CreateTambaksTable extends Migration
             $table->string('nama_tambak');
             $table->text('alamat');
             $table->string('no_telp');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->integer('user_id');
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

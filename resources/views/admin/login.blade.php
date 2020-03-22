@@ -32,7 +32,7 @@
           {{session('error')}}
       </div>
       @endif
-    <form action="{{route('loginadmin.submit')}}" method="post">
+    <form action="{{route('login')}}" method="post">
         {{csrf_field()}}
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Username" name="username">
