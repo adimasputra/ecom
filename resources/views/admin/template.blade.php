@@ -126,6 +126,12 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
             class="fas fa-th-large"></i></a>
       </li>
+      <li class="nav-item">
+        <form action="{{ route('logout') }}" method="post">
+          @csrf
+          <button type="submit" class="nav-link">Logout</button>
+        </form>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -147,7 +153,7 @@
           <img src="{{asset('admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{Auth::guard('user')->user()->username}}</a>
+        <a href="#" class="d-block">{{Auth::user()->username}}</a>
         </div>
       </div>
 
@@ -163,12 +169,28 @@
               <p>Dashboard</p>
             </a>
           </li>
+          @if(Auth::user()->level == 1)
           <li class="nav-item">
             <a href="{{route('nelayan.index')}}" class="linelayan nav-link">
               <i class="fas fa-users nav-icon"></i>
               <p>Nelayan</p>
             </a>
           </li>
+          @endif 
+          <li class="nav-item">
+            <a href="{{route('tambak.index')}}" class=" nav-link">
+              <i class="fas fa-users nav-icon"></i>
+              <p>Tambak</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('ikan.index')}}" class=" nav-link">
+              <i class="fas fa-users nav-icon"></i>
+              <p>Ikan</p>
+            </a>
+          </li>
+          
+
           
         </ul>
       </nav>
