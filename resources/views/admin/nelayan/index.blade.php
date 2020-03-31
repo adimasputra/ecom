@@ -20,7 +20,7 @@ Nelayan
 
 @section('content')
 
-<div class="modal fade" id="modal-lg">
+{{-- <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -40,7 +40,7 @@ Nelayan
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-  </div>
+  </div> --}}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -50,7 +50,7 @@ Nelayan
                         Data Nelayan
                     </div>
                     <div class="card-tools">
-                        <a  href="#"data-toggle="modal" data-target="#modal-lg" class="btn btn-primary btn-tambah">Tambah Data <i class="fa fa-plus"></i></a>
+                        <a  href="{{route('nelayan.create')}}" class="btn btn-primary btn-tambah">Tambah Data <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -90,26 +90,30 @@ Nelayan
 
     $(document).ready(function(){
         $('.linelayan').addClass('active');
-        console.log($('#Foto').prop('files'))
+      
+       @if(session()->has('success'))
+            toastr.success("{{session('success')}}")
+            
+       @endif
        
     })
-    var Filefoto;
-    $('#Foto').change(function(){
-        var fileInput = this;
-            console.log(fileInput.files[0])
-            Filefoto = fileInput.files[0];
-        var filePath = fileInput.value;
+    // var Filefoto;
+    // $('#Foto').change(function(){
+    //     var fileInput = this;
+    //         console.log(fileInput.files[0])
+    //         Filefoto = fileInput.files[0];
+    //     var filePath = fileInput.value;
         
         
-            //Image preview
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'" width="250px" heighth="250px"/>';
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-    })
+    //         //Image preview
+    //         if (fileInput.files && fileInput.files[0]) {
+    //             var reader = new FileReader();
+    //             reader.onload = function(e) {
+    //                 document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'" width="250px" heighth="250px"/>';
+    //             };
+    //             reader.readAsDataURL(fileInput.files[0]);
+    //         }
+    // })
     var Table =  $('#Table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -131,8 +135,8 @@ Nelayan
                     
                     render: function(data, type, row){
                       
-                        var button = `<a class="btn btn-warning btn-edit" data-id=":id"><i class="fa fa-edit text-white"></i></a>
-                                      <a class="btn btn-danger btn-delete" data-id=":idhapus"><i class="fa fa-trash text-white"></i></a>
+                        var button = `<a href="{{ route('nelayan.edit', ['id' => ':id' ]) }}" class="btn btn-warning btn-edit"><i class="fa fa-edit text-white"></i></a>
+                                      <a href="#" class="btn btn-danger btn-delete" data-id=":idhapus"><i class="fa fa-trash text-white"></i></a>
                         `
                                 button = button.replace(':id',data);
                                 button = button.replace(':idhapus',data);
@@ -147,93 +151,93 @@ Nelayan
                
             });
 
-    $('.btn-tambah').on('click', function(){
-        $('.input-value').val("");
-    })
-    $('.btn-submit').on('click', function(){
-            var checkrequired = $('input,textarea,select').filter('[required]:visible')
-            var isValid = true;
+    // $('.btn-tambah').on('click', function(){
+    //     $('.input-value').val("");
+    // })
+    // $('.btn-submit').on('click', function(){
+    //         var checkrequired = $('input,textarea,select').filter('[required]:visible')
+    //         var isValid = true;
             
-            $(checkrequired).each( function() {
-                    if ($(this).parsley().validate() !== true) isValid = false;
-            });
-            if(!isValid){
-                return;
-            }
+    //         $(checkrequired).each( function() {
+    //                 if ($(this).parsley().validate() !== true) isValid = false;
+    //         });
+    //         if(!isValid){
+    //             return;
+    //         }
             
-            urlsnya = '{{route('nelayan.store')}}';
-            _token = $('.form_content').find('input[name=_token]').val();
-            form = $('.form_content').find('.input-value');
-            var arr= {};
+    //         urlsnya = '{{route('nelayan.store')}}';
+    //         _token = $('.form_content').find('input[name=_token]').val();
+    //         form = $('.form_content').find('.input-value');
+    //         var arr= {};
            
-            var file = new FormData();
-             file.append('file', Filefoto);
-             $.each(form,function(k,value){
-                file.append(value.name,value.value);
+    //         var file = new FormData();
+    //          file.append('file', Filefoto);
+    //          $.each(form,function(k,value){
+    //             file.append(value.name,value.value);
                
-            });
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                data: file,
-                url: urlsnya,
-            })
-            .done(function(response) {
-                if(response == 1){
-                    toastr.success('Data berhasil disimpan')
-                    Table.ajax.reload();
-                    $('#modal-lg').modal('hide');
-                    $('.input-value').val("");
-                    $(checkrequired).each( function() {
-                        $(this).parsley().reset();
-                    });
-                }
-            })
-            .fail(function() {
-                $.alert('process fail');
-            })
-            .always(function() {
-                console.log("complete");
-            });
-        });
+    //         });
+    //         $.ajax({
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             type: 'POST',
+    //             contentType: false,
+    //             processData: false,
+    //             dataType: 'json',
+    //             data: file,
+    //             url: urlsnya,
+    //         })
+    //         .done(function(response) {
+    //             if(response == 1){
+    //                 toastr.success('Data berhasil disimpan')
+    //                 Table.ajax.reload();
+    //                 $('#modal-lg').modal('hide');
+    //                 $('.input-value').val("");
+    //                 $(checkrequired).each( function() {
+    //                     $(this).parsley().reset();
+    //                 });
+    //             }
+    //         })
+    //         .fail(function() {
+    //             $.alert('process fail');
+    //         })
+    //         .always(function() {
+    //             console.log("complete");
+    //         });
+    //     });
 
-        $(document).on('click', '.btn-edit', function(){
+    //     $(document).on('click', '.btn-edit', function(){
             
-            var id = this.attributes['data-id'].value;
+    //         var id = this.attributes['data-id'].value;
 
-            $('.form-password').remove();
-            $('#Foto').removeAttr('required');
+    //         $('.form-password').remove();
+    //         $('#Foto').removeAttr('required');
 
 
-            var urlsnya = '{{ route("nelayan.edit", ['id'=>":id"]) }}';
-            urlsnya = urlsnya.replace(':id', id);
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                data: {
-                    id: id,
-                    "_token": "{{ csrf_token() }}"
-                },
-                url: urlsnya,
-            })
-            .done(function(response){
-                console.log(response[0])
-                $('#modal-lg').modal()
-                $('#iduser').val(response[0]['iduser'])
-                $('#Nama').val(response[0]['nama'])
-                $('#Username').val(response[0]['username'])
-                $('#Email').val(response[0]['email'])
-                $('#NamaTambak').val(response[0]['nama_tambak'])
-                $('#No_Telp').val(response[0]['no_telp'])
-                $('#Alamat').val(response[0]['alamat'])
-                $('#imagePreview').append(`<img src="{{asset('img/')}}/`+response[0]['foto']+`" width="250px" heighth="250px"/>`)
-            })
-        })
+    //         var urlsnya = '{{ route("nelayan.edit", ['id'=>":id"]) }}';
+    //         urlsnya = urlsnya.replace(':id', id);
+    //         $.ajax({
+    //             type: 'GET',
+    //             dataType: 'json',
+    //             data: {
+    //                 id: id,
+    //                 "_token": "{{ csrf_token() }}"
+    //             },
+    //             url: urlsnya,
+    //         })
+    //         .done(function(response){
+    //             console.log(response[0])
+    //             $('#modal-lg').modal()
+    //             $('#iduser').val(response[0]['iduser'])
+    //             $('#Nama').val(response[0]['nama'])
+    //             $('#Username').val(response[0]['username'])
+    //             $('#Email').val(response[0]['email'])
+    //             $('#NamaTambak').val(response[0]['nama_tambak'])
+    //             $('#No_Telp').val(response[0]['no_telp'])
+    //             $('#Alamat').val(response[0]['alamat'])
+    //             $('#imagePreview').append(`<img src="{{asset('img/')}}/`+response[0]['foto']+`" width="250px" heighth="250px"/>`)
+    //         })
+    //     })
 
         $(document).on('click', '.btn-delete', function(){
             var id = this.attributes['data-id'].value;

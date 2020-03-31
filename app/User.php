@@ -18,6 +18,16 @@ class User extends Authenticatable
         'nama', 'email', 'password','username','level'
     ];
 
+    public static function defaultValues(){
+        return [
+            'nama' => '',
+            'email' => '',
+            'password' => '',
+            'username' => '',
+            'level' => ''
+        ];
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

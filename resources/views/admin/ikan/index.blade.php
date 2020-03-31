@@ -1,10 +1,10 @@
 @extends('admin.template')
 @section('title')
-Tambak
+Ikan
 @endsection
 
 @section('breadcumb')
-Form Tambak
+Ikan
 @endsection
 
 @section('css')
@@ -20,16 +20,17 @@ Form Tambak
 
 @section('content')
 
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        Data Tambak
+                        Data Ikan
                     </div>
                     <div class="card-tools">
-                        <a href=" {{ route('tambak.create') }} " class="btn btn-primary btn-tambah">Tambah Data <i class="fa fa-plus"></i></a>
+                        <a  href="{{route('ikan.create')}}" class="btn btn-primary btn-tambah">Tambah Data <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,33 +39,20 @@ Form Tambak
                       <table id="Table" class="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Nama Tambak</th>
-                            <th>Alamat</th>
-                            <th>No. Telp</th>
-                            <th>Pemilik</th>
+                            <!-- <th>Foto</th> -->
+                            <th>Kode</th>
+                            <th>Foto</th>
+                            <th>Nama</th>
+                            <th>Tambak</th>
+                            <th>Harga</th>
+                            <th>Berat</th>
+                           
                             <th></th>
                           </tr>
                         </thead>
-                        {{-- <tbody>
-                            @foreach($tambak as $row)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $row->nama_tambak }}</td>
-                                <td> {{ $row->alamat }} </td>
-                                <td> {{ $row->no_telp }} </td>
-                                <td> {{ $row->user->nama }} </td>
-                                <td> 
-                                    <form action=" {{ route('tambak.destroy', ['id' => $row->id]) }} " method="post">
-                                    @csrf
-                                    @method('delete')
-                                        <a href=" {{ route('tambak.edit', ['id' => $row->id ]) }} " class="btn btn-warning btn-edit"><i class="fa fa-edit text-white"></i></a>
-                                        
-                                        <button type="submit" class="btn btn-danger btn-delete" onclick="return confirm('Yakin akan hapus data?')"><i class="fa fa-trash text-white"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody> --}}
+                        <tbody>
+      
+                        </tbody>
                        
                       </table>
                     </div>
@@ -83,7 +71,7 @@ Form Tambak
 <script>
 
     $(document).ready(function(){
-        $('.litambak').addClass('active');
+        $('.liikan').addClass('active');
       
        @if(session()->has('success'))
             toastr.success("{{session('success')}}")
@@ -102,18 +90,29 @@ Form Tambak
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
-                ajax: '{!! route('tambak.datatable') !!}',
+                ajax: '{!! route('ikan.datatable') !!}',
                 columns:[
+                  {'data': 'kode'},
+                  {
+                    data:"foto",
+                    
+                    render: function(data, type, row){
+                      
+                        
+                        return '<img src="{!!url("storage/foto/'+data+'")!!}" width="80px" height="80px"/>';
+                    }
+                  },
+                  {'data': 'nama_ikan'},
                   {'data': 'nama_tambak'},
-                  {'data': 'alamat'},
-                  {'data': 'no_telp'},
-                  {'data': 'nama_pemilik'},
+                  {'data': 'harga'},
+                  {'data': 'berat'},
+                  
                   {
                     data:"id",
                     
                     render: function(data, type, row){
                       
-                        var button = `<a href="{{ route('tambak.edit', ['id' => ':id' ]) }}" class="btn btn-warning btn-edit"><i class="fa fa-edit text-white"></i></a>
+                        var button = `<a href="{{ route('ikan.edit', ['id' => ':id' ]) }}" class="btn btn-warning btn-edit"><i class="fa fa-edit text-white"></i></a>
                                       <a href="#" data-id=":idhapus" class="btn btn-danger btn-delete"><i class="fa fa-trash text-white"></i></a>
                         `
                                 button = button.replace(':id',data);
@@ -131,7 +130,7 @@ Form Tambak
 
             $(document).on('click', '.btn-delete', function(){
                 var id = this.attributes['data-id'].value;
-                var urlsnya = '{{ route("tambak.destroy", ":id") }}';
+                var urlsnya = '{{ route("ikan.destroy", ":id") }}';
                     urlsnya = urlsnya.replace(':id', id);
                 $.confirm({
                     theme: 'material',

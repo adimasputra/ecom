@@ -61,7 +61,7 @@ Daftar
                             
                         </form>
                         <br>
-                         <span>Sudah punya akun? <a href="{{route('login')}}" class="a">Login Sekarang</a></span>
+                         <span>Sudah punya akun? <a href="{{route('masuk')}}" class="a">Login Sekarang</a></span>
                     </div>
                 </div>
                 

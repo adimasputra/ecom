@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Tambak;
 use Yajra\Datatables\Datatables;
 use Auth;
+use DB;
 use App\User;
 
 class TambakController extends Controller
@@ -21,8 +22,31 @@ class TambakController extends Controller
         if(Auth::user()->level == 1){
             $tambak = Tambak::all(); 
         }
-
+        else{
+            $tambak = Tambak::where('user_id',Auth::user()->id)->get();
+            
+        }
+        
         return view('admin.tambak.index', compact('tambak'));
+    }
+
+    public function datatable(){
+        if(Auth::user()->level == 1){
+            $data = DB::table('tambak')->join('users','tambak.user_id','users.id')
+                                     ->select('tambak.*','users.nama as nama_pemilik')
+                                     ->orderBy('tambak.created_at','DESC')
+                                     ->get(); 
+        }
+        else{
+            $data = DB::table('tambak')->join('users','tambak.user_id','users.id')
+                                     ->select('tambak.*','users.nama as nama_pemilik')
+                                     ->where('tambak.user_id', Auth::user()->id)
+                                     ->orderBy('tambak.created_at','DESC')
+                                     ->get();
+            
+        }
+      
+        return Datatables::of($data)->make(true);
     }
 
     /**
@@ -33,7 +57,13 @@ class TambakController extends Controller
     public function create()
     {
         $input = Tambak::defaultValues();
-        $user = User::where('level' , 0)->get();
+        if(Auth::user()->level == 1){
+            $user = User::where('level' , 0)->get(); 
+        }
+        else{
+            $user = Auth::user();
+        }
+        
         return view('admin/tambak/form', compact('input', 'user'));
     }
 
@@ -45,6 +75,7 @@ class TambakController extends Controller
      */
     public function store(StoreTambak $request)
     {
+       
         $input = $request->all();
         $input['foto'] = '';
 
@@ -78,7 +109,12 @@ class TambakController extends Controller
     public function edit($id)
     {
         $input = Tambak::find($id);
-        $user = User::all();
+        if(Auth::user()->level == 1){
+            $user = User::where('level' , 0)->get(); 
+        }
+        else{
+            $user = Auth::user();
+        }
         return view('admin/tambak/form', compact('input', 'user'));
     }
 
@@ -121,14 +157,16 @@ class TambakController extends Controller
      */
     public function destroy($id)
     {
+
         $tambak = Tambak::find($id);
-        if($tambak->cover != ''){
+        
+        if($tambak->foto != ''){
             //remove old photos
-            if(is_file('storage/foto/'.$tambak->cover)){
-                unlink('storage/foto/'.$tambak->cover);
+            if(is_file('storage/foto/'.$tambak->foto)){
+                unlink('storage/foto/'.$tambak->foto);
             }
         }
         $tambak->delete();
-        return redirect()->route('tambak.index')->with('success', 'Berhasil menambah menghapus tambak');
+        return 1;
     }
 }

@@ -10,15 +10,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
-//Route::post('/logout', 'HomeController@logout')->name('logout');
-//Route::get('/login','HomeController@login')->name('login');
-Route::get('/daftar','HomeController@register')->name('register');
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/detail-ikan/{id}', 'HomeController@detail')->name('detail-ikan');
+Route::get('/keluar', 'HomeController@logout')->name('keluar');
+Route::get('/profil', 'HomeController@profil')->name('profil');
+Route::get('/masuk','HomeController@login')->name('masuk');
+Route::get('/daftar','HomeController@register')->name('daftar');
 Route::post('/daftar-submit','HomeController@registersubmit')->name('register.submit');
 Route::post('/login-submit','HomeController@loginsubmit')->name('login.submit');
 
+Route::get('/insert/cart/{id}', 'HomeController@insertcart')->name('insertcart');
+Route::get('/delete/cart/{id}', 'HomeController@deletecart')->name('deletecart');
+Route::get('/update/cart/{id}', 'HomeController@updatecart')->name('updatecart');
+Route::get('/cart', 'HomeController@cart')->name('cart');
 Route::prefix('admin')->group(function () {
     Auth::routes();
 });
@@ -31,6 +36,7 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::resource('admin/ikan', 'IkanController');
+    Route::get('ikandatatable','IkanController@datatable')->name('ikan.datatable');
     Route::resource('admin/tambak', 'TambakController');
-    
+    Route::get('tambakdatatable','TambakController@datatable')->name('tambak.datatable');
 });

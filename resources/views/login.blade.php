@@ -50,7 +50,7 @@ Login
                             
                         </form>
                         <br>
-                         <span>Belum punya akun? <a href="{{route('register')}}"class="a">Daftar Sekarang</a></span>
+                         <span>Belum punya akun? <a href="{{route('daftar')}}"class="a">Daftar Sekarang</a></span>
                     </div>
                 </div>
                 

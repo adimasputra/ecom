@@ -15,6 +15,7 @@
     <!-- All css files are included here. -->
     <!-- Bootstrap fremwork main css -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/plugins/jquery-confirm/css/jquery-confirm.css')}}">
     <!-- Owl Carousel min css -->
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
@@ -160,12 +161,12 @@
                                             </ul>
                                         </li>
                                         <li><a href="contact.html">contact</a></li>
-                                       
-                                        @if(Auth::guard('pelanggan'))
-                                        <li><a href="{{route('login')}}"><i class="icon-user icons a"></i></a></li>
-                                        <li><a href="{{route('logout')}}" class="a">Log Out</a></li>
+                                        
+                                        @if(Auth::guard('pelanggan')->user())
+                                        <li><a href="{{route('profil')}}"><i class="icon-user icons a"></i></a></li>
+                                        <li><a href="{{route('keluar')}}" class="a">Log Out</a></li>
                                         @else
-                                        <li><a href="{{route('login')}}" class="a">Log In</a></li>
+                                        <li><a href="{{route('masuk')}}" class="a">Log In</a></li>
                                         @endif
                                     </ul>
                                 </nav>
@@ -413,6 +414,7 @@
 
     <!-- jquery latest version -->
     <script src="{{asset('js/vendor/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{asset('admin/plugins/jquery-confirm/js/jquery-confirm.js')}}"></script>
     <!-- Bootstrap framework js -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- All js plugins included in this file. -->

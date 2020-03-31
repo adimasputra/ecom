@@ -8,7 +8,7 @@ use Yajra\Datatables\Datatables;
 use Auth;
 use App\Tambak;
 use App\User;
-
+use Crypt;
 class NelayanController extends Controller
 {
     public function index(){
@@ -19,10 +19,18 @@ class NelayanController extends Controller
       
         return Datatables::of($data)->make(true);
     }
+    public function create()
+    {
+        $inputuser = User::defaultValues();
+        $inputtambak = Tambak::defaultValues();
+       
+        return view('admin/nelayan/form', compact('inputuser', 'inputtambak'));
+    }
     public function store(Request $request){
+   
         //create
         if($request->iduser == null && $request->idtambak == null){
-            $file = $request->file('file');
+            $file = $request->file('foto');
  
             $nama_file = time()."_".$file->getClientOriginalName();
             
@@ -33,7 +41,7 @@ class NelayanController extends Controller
             $user->username = $request->username;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
-            $user->level = 'pemilik';
+            $user->level = 0;
             $user->save();
             $tambak = new Tambak;
             $tambak->nama_tambak = $request->nama_tambak;
@@ -45,20 +53,41 @@ class NelayanController extends Controller
             $tambak->save();
             $tujuan_upload = 'img';
             $file->move($tujuan_upload,$nama_file);
-            return 1;
+            return redirect()->route('nelayan.index')->with('success', 'Berhasil menambah nelayan');
         }
-        //update
-        else{
-            //script update
-        }
+        
      
     }
 
     public function edit($id){
        
-        $data = DB::table('users')->join('tambak','users.id','tambak.user_id')->where('users.id',$id)->select('users.*','users.id as iduser','tambak.*')->get();
+        $inputuser = User::find($id);
        
-        return $data;
+        return view('admin/nelayan/form', compact('inputuser'));
+    }
+    public function update(Request $request,$id){
+       
+        if(!Auth::validate(['username' => $request->username, 'password' => $request->password])){
+            return redirect()->back()->with('error','Password tidak sesuai');
+        }
+        $user = User::find($id);
+        $user->nama = $request->nama;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        if($request->passwordbaru){
+            $user->password = bcrypt($request->passwordbaru);
+        }
+        $user->update();
+        return redirect()->route('nelayan.index')->with('success', 'Berhasil mengubah data nelayan');
+    }
+    public function destroy($id)
+    {
+        
+        $user = User::find($id);
+        $tambak = Tambak::where('user_id',$user->id)->delete();
+       
+        $user->delete();
+        return 1;
     }
 
 }

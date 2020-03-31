@@ -23,4 +23,16 @@ class Ikan extends Model
     {
         return $this->belongsTo('App\Tambak');
     }
+
+    public static function defaultValues(){
+        return [
+            'kode' => '',
+            'nama_ikan' => '',
+            'harga' => '',
+            'foto' => '',
+            'berat' => '',
+            'tambak_id' => '',
+            'deskripsi' => '',
+        ];
+    }
 }
