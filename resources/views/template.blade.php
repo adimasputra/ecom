@@ -6,7 +6,7 @@
     <title>@yield('title')</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Place favicon.ico in the root directory -->
     {{-- <link rel="shortcut icon" typ{{asset('e="image/x-icon" href="images/favicon.ico"> --}}
     
@@ -28,11 +28,15 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <!-- User style -->
+    <link rel="stylesheet" href="{{asset('admin/plugins/parsley-js/parsley.css')}}">
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
     <style>
         .a {
             color:#c43b68 !important;
+        }
+        .accordion .accordion__title:before{
+            content: none;
         }
         </style>
     @yield('link')
@@ -57,110 +61,16 @@
                         <div class="menumenu__container clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5"> 
                                 <div class="logo">
-                                     <a href="index.html"><img src="images/logo/4.png" alt="logo images"></a>
+                                    <a href="#"><img src="{{asset('images/logo/4.png')}}" alt="logo images"></a>
                                 </div>
                             </div>
                             <div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
                                 <nav class="main__menu__nav hidden-xs hidden-sm">
                                     <ul class="main__menu">
-                                        <li class="drop"><a href="index.html">Home</a></li>
-                                        {{-- <li class="drop"><a href="#">women</a>
-                                            <ul class="dropdown mega_dropdown">
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Shop Pages</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="product-grid.html">Product Grid</a></li>
-                                                        <li><a href="cart.html">cart</a></li>
-                                                        <li><a href="checkout.html">checkout</a></li>
-                                                        <li><a href="wishlist.html">wishlist</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Variable Product</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="#">Category</a></li>
-                                                        <li><a href="#">My Account</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Product Types</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="#">Simple Product</a></li>
-                                                        <li><a href="#">Variable Product</a></li>
-                                                        <li><a href="#">Grouped Product</a></li>
-                                                        <li><a href="#">Downloadable Product</a></li>
-                                                        <li><a href="#">Simple Product</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                            </ul>
-                                        </li>
-                                        <li class="drop"><a href="#">men</a>
-                                            <ul class="dropdown mega_dropdown">
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Shop Pages</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="product-grid.html">Product Grid</a></li>
-                                                        <li><a href="cart.html">cart</a></li>
-                                                        <li><a href="checkout.html">checkout</a></li>
-                                                        <li><a href="wishlist.html">wishlist</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Variable Product</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="#">Category</a></li>
-                                                        <li><a href="#">My Account</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                                <!-- Start Single Mega MEnu -->
-                                                <li><a class="mega__title" href="product-grid.html">Product Types</a>
-                                                    <ul class="mega__item">
-                                                        <li><a href="#">Simple Product</a></li>
-                                                        <li><a href="#">Variable Product</a></li>
-                                                        <li><a href="#">Grouped Product</a></li>
-                                                        <li><a href="#">Downloadable Product</a></li>
-                                                        <li><a href="#">Simple Product</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- End Single Mega MEnu -->
-                                            </ul>
-                                        </li>
-                                        <li class="drop"><a href="#">Product</a>
-                                            <ul class="dropdown">
-                                                <li><a href="product-grid.html">Product Grid</a></li>
-                                                <li><a href="product-details.html">Product Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="drop"><a href="blog.html">blog</a>
-                                            <ul class="dropdown">
-                                                <li><a href="blog.html">Blog Grid</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
-                                            </ul>
-                                        </li> --}}
-                                        <li class="drop"><a href="#">Pages</a>
-                                            <ul class="dropdown">
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
-                                                <li><a href="cart.html">Cart page</a></li>
-                                                <li><a href="checkout.html">checkout</a></li>
-                                                <li><a href="contact.html">contact</a></li>
-                                                <li><a href="product-grid.html">product grid</a></li>
-                                                <li><a href="product-details.html">product details</a></li>
-                                                <li><a href="wishlist.html">wishlist</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">contact</a></li>
+                                        <li><a href="{{route('home')}}">Home</a></li>
+                                        <li><a href="#">Ikan</a></li>
+                                        <li><a href="#">Tambak</a></li>
+                                        <li><a href="#">contact</a></li>
                                         
                                         @if(Auth::guard('pelanggan')->user())
                                         <li><a href="{{route('profil')}}"><i class="icon-user icons a"></i></a></li>
@@ -174,22 +84,17 @@
                                 <div class="mobile-menu clearfix visible-xs visible-sm">
                                     <nav id="mobile_dropdown">
                                         <ul>
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="blog.html">blog</a></li>
-                                            <li><a href="#">pages</a>
-                                                <ul>
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                                    <li><a href="cart.html">Cart page</a></li>
-                                                    <li><a href="checkout.html">checkout</a></li>
-                                                    <li><a href="contact.html">contact</a></li>
-                                                    <li><a href="product-grid.html">product grid</a></li>
-                                                    <li><a href="product-details.html">product details</a></li>
-                                                    <li><a href="wishlist.html">wishlist</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">contact</a></li>
-                                            <li><a href="{{route('login')}}"><i class="icon-user icons"></i></a></li>
+                                            <li><a href="{{route('home')}}">Home</a></li>
+                                        <li><a href="#">Ikan</a></li>
+                                        <li><a href="#">Tambak</a></li>
+                                        <li><a href="#">contact</a></li>
+                                        
+                                        @if(Auth::guard('pelanggan')->user())
+                                        <li><a href="{{route('profil')}}"><i class="icon-user icons a"></i></a></li>
+                                        <li><a href="{{route('keluar')}}" class="a">Log Out</a></li>
+                                        @else
+                                        <li><a href="{{route('masuk')}}" class="a">Log In</a></li>
+                                        @endif
                                         </ul>
                                     </nav>
                                 </div>  
@@ -417,6 +322,7 @@
     <script src="{{asset('admin/plugins/jquery-confirm/js/jquery-confirm.js')}}"></script>
     <!-- Bootstrap framework js -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin/plugins/parsley-js/parsley.js')}}"></script>
     <!-- All js plugins included in this file. -->
     <script src="{{asset('js/plugins.js')}}"></script>
     <script src="{{asset('js/slick.min.js')}}"></script>

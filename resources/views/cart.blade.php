@@ -42,7 +42,7 @@ Chart Pembelian
                                             <td class="product-price"><span class="amount">{{$item['berat']}}</span></td>
                                             <td class="product-quantity"><input type="number" class="qty" value="{{$item['qty']}}" /></td>
                                             <td class="product-subtotal">Rp. <span class="subtotal">{{number_format($item['harga'] * $item['qty'])}}</span></td>
-                                            <td class="product-name"><button class="btn btn-primary btn-update hide" data-id="{{$item['id']}}">Update</button>&nbsp;<button class="btn btn-danger btn-hapus" data-id="{{$item['id']}}">Hapus</button></td>
+                                            <td class="product-name"><div class="btn btn-primary btn-update hide" data-id="{{$item['id']}}">Update</div>&nbsp;<div class="btn btn-danger btn-hapus" data-id="{{$item['id']}}">Hapus</div></td>
                                         </tr>
                                         @php
                                             $total += $item['harga'] * $item['qty'];
@@ -58,11 +58,11 @@ Chart Pembelian
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="buttons-cart--inner">
                                 <div class="buttons-cart">
-                                    <a href="{{route('home')}}">Continue Shopping</a>
+                                    <a href="{{route('home')}}">Lanjut Belanja</a>
                                 </div>
                                 <div class="buttons-cart checkout--btn">
                                     
-                                    <a href="#">checkout</a>
+                                    <a href="{{route('checkout')}}">checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -77,13 +77,12 @@ Chart Pembelian
                                 <div class="cart__desk__list">
                                     <ul class="cart__desc">
                                         <li>cart total</li>
-                                        <li>tax</li>
-                                        <li>shipping</li>
+                                        <li>Belum ongkos kirim</li>
+                                        
                                     </ul>
                                     <ul class="cart__price">
                                         <li>Rp. {{number_format($total)}}</li>
-                                        <li>Rp. 0</li>
-                                        <li>Rp. 0</li>
+                                        
                                     </ul>
                                 </div>
                                 <div class="cart__total">
@@ -91,8 +90,8 @@ Chart Pembelian
                                     <span>Rp. {{number_format($total)}}</span>
                                 </div>
                                 <ul class="payment__btn">
-                                    <li class="active"><a href="#">payment</a></li>
-                                    <li><a href="#">continue shopping</a></li>
+                                    <li class="active"><a href="{{route('checkout')}}">checkout</a></li>
+                                    <li><a href="{{route('home')}}">Lanjut Belanja</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -166,6 +165,11 @@ Chart Pembelian
                 row = $(this).closest('.rowcart');
                 input = $(row).find('.qty');
                 var qty = $(input).val();
+                if(qty == 0){
+                    $.alert('Quantiti tidak boleh 0');
+                    return;
+                }
+                
                 var urlsnya = '{{ route("updatecart", ":id") }}';
                     urlsnya = urlsnya.replace(':id', id);
               
@@ -183,7 +187,7 @@ Chart Pembelian
                 .done(function(response) {
                     if(response == 1) {
                         $(btn).addClass('hide')
-                        
+                        location.reload()
                     }
                 })
                 .fail(function() {

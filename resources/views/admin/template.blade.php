@@ -89,6 +89,12 @@
               <p>Nelayan</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('kabupaten.index')}}" class="likabupaten nav-link">
+              <i class="fas fa-users nav-icon"></i>
+              <p>Kabupaten</p>
+            </a>
+          </li>
           @endif 
           <li class="nav-item">
             <a href="{{route('tambak.index')}}" class="litambak nav-link">

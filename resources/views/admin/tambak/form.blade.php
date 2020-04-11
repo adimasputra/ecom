@@ -4,7 +4,7 @@ Tambak
 @endsection
 
 @section('breadcumb')
-Tambak
+Form Tambak
 @endsection
 
 @section('content')
@@ -31,7 +31,7 @@ Tambak
                                 @if(Auth::user()->level == 1)
                                     <div class="form-group">
                                         <label for="">Pemilik Tambak</label>
-                                        <select name="user_id" class="form-control">
+                                        <select name="user_id" class="form-control col-md-6">
                                             <option value=""> - Pilih Pemilik Tambak </option>
                                             @foreach($user as $option)
                                                 <option value=" {{ $option->id }} " {{ ($option->id == $input['user_id']) ? 'selected' : '' }} > {{ $option->nama }} </option>
@@ -44,16 +44,16 @@ Tambak
                                
                                 <div class="form-group">
                                     <label for="">Nama Tambak</label>
-                                    <input type="text" class="form-control input-value" id="NamaTambak" name="nama_tambak" required value=" {{ old('nama_tambak', $input['nama_tambak']) }} ">
+                                    <input type="text" class="form-control col-md-6 input-value" id="NamaTambak" name="nama_tambak" required value=" {{ old('nama_tambak', $input['nama_tambak']) }} ">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">No Telepon</label>
-                                    <input type="text" class="form-control input-value" id="No_Telp" name="no_telp" required value=" {{ old('no_telp', $input['no_telp']) }} ">
+                                    <input type="text" class="form-control col-md-6 input-value" id="No_Telp" name="no_telp" required value=" {{ old('no_telp', $input['no_telp']) }} ">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Alamat</label>
-                                    <input type="text" class="form-control input-value" id="Alamat" name="alamat" required value=" {{ old('alamat', $input['alamat']) }} ">
+                                    <input type="text" class="form-control col-md-6 input-value" id="Alamat" name="alamat" required value=" {{ old('alamat', $input['alamat']) }} ">
                                 </div>
 
                                 @if($input['foto'])
@@ -68,7 +68,7 @@ Tambak
                                 
                                 <div class="form-group">
                                     <label for="">Foto</label>
-                                    <input type="file" class="form-control input-value foto" id="Foto" accept="image/x-png,image/gif,image/jpeg" name="foto">
+                                    <input type="file" class="form-control col-md-4 input-value foto" id="Foto" accept="image/x-png,image/gif,image/jpeg" name="foto">
                                 </div>
 
                                 <div class="form-group">
